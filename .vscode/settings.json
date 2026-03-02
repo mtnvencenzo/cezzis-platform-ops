@@ -1,0 +1,15 @@
+{
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true,
+        "**/volumes/**": true
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.cs": "${capture}.http",
+        "*.json": "${capture}.*.json,${capture}.*.json.user",
+        "*.resx": "${capture}.Designer.cs",
+        "*.yaml": "${capture}.override.yaml"
+    }
+}

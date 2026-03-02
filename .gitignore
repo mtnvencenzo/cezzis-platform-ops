@@ -1,0 +1,11 @@
+# Docker-related ignores
+*.swp
+*.bak
+*.tmp
+.DS_Store
+
+.env-local
+
+docker-compose.override.yaml
+
+mtnvencenzo-argocd-writeback-app.private-key.pem
