@@ -33,10 +33,22 @@ kubectl create secret generic azure-sp-credentials \
 ### cezzis.com bootstrapper
 
 ``` shell
+# app
 kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-local-bootstrapper/refs/heads/main/.iac/argocd/cezzis-com-local-boostrapper.yaml
+
+# image updater
 kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-local-bootstrapper/refs/heads/main/.iac/argocd/image-updater.yaml
 ```
 
+### cezzis.com bootstrapper
+
+``` shell
+# app
+kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-cocktails-aisearch/refs/heads/main/.iac/argocd/cezzis-com-cocktails-aisearch.yaml
+
+# image updater
+kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-cocktails-aisearch/refs/heads/main/.iac/argocd/image-updater.yaml
+```
 
 ## Troubleshooting
 
