@@ -40,7 +40,7 @@ kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-local-
 kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-local-bootstrapper/refs/heads/main/.iac/argocd/image-updater.yaml
 ```
 
-### cezzis.com bootstrapper
+### cezzis-com-cocktails-aisearch
 
 ``` shell
 # app
