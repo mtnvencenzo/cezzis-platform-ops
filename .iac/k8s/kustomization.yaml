@@ -4,3 +4,4 @@ resources:
   - namespace.yml
   - cezzis-prd-secret-store.yml
   - shared-secret-store.yml
+  - external-secrets-dapr-tokens.yml
