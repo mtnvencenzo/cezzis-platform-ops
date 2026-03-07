@@ -50,6 +50,18 @@ kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-cockta
 kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-cocktails-aisearch/refs/heads/main/.iac/argocd/image-updater.yaml
 ```
 
+### cezzis-com-cocktails-aisearch
+
+``` shell
+# app
+kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-accounts-api/refs/heads/main/.iac/argocd/cezzis-com-accounts-api.yaml
+
+# image updater
+kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-accounts-api/refs/heads/main/.iac/argocd/image-updater.yaml
+```
+
+
+
 ## Troubleshooting
 
 ### Clearing a stuck argocd application from deleting
