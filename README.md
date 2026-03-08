@@ -50,7 +50,7 @@ kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-cockta
 kubectl apply -f https://raw.githubusercontent.com/mtnvencenzo/cezzis-com-cocktails-aisearch/refs/heads/main/.iac/argocd/image-updater.yaml
 ```
 
-### cezzis-com-cocktails-aisearch
+### cezzis-com-accounts-api
 
 ``` shell
 # app
