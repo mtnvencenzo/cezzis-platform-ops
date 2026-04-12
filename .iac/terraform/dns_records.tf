@@ -115,6 +115,21 @@ resource "azurerm_dns_txt_record" "frontdoor_www_validation" {
 }
 
 # =====================================================
+# BING CNAME Verification Record
+# =====================================================
+
+resource "azurerm_dns_cname_record" "bing_verification" {
+  count               = var.include_apex_domain_records ? 1 : 0
+  name                = "59e3c49547ed9234db79a62918e686f2"
+  zone_name           = data.azurerm_dns_zone.cezzis_dns_zone.name
+  resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
+  ttl                 = 300
+  record              = "verify.bing.com"
+  tags                = local.tags
+}
+
+
+# =====================================================
 # FRONT DOOR DNS ROUTING RECORDS
 # =====================================================
 
