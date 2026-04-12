@@ -23,8 +23,8 @@ module "login_cname_record" {
 # MX MAIL RECORD
 # ================================
 module "cocktails_dns_zoho_mx_record" {
-  source             = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-mx-record"
-  count              = var.include_apex_domain_records == true ? 1 : 0
+  source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-mx-record"
+  count  = var.include_apex_domain_records == true ? 1 : 0
 
   tags = local.tags
 
