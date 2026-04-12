@@ -25,7 +25,6 @@ module "login_cname_record" {
 module "cocktails_dns_zoho_mx_record" {
   source             = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-mx-record"
   count              = var.include_apex_domain_records == true ? 1 : 0
-  spf_include_domain = "zohomail.com"
 
   tags = local.tags
 
