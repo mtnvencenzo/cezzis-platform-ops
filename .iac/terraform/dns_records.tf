@@ -24,7 +24,7 @@ module "login_cname_record" {
 # ================================
 module "cocktails_dns_zoho_mx_record" {
   source             = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-mx-record"
-  count              = var.include_zoho_mx_dns_records == true ? 1 : 0
+  count              = var.include_apex_domain_records == true ? 1 : 0
   spf_include_domain = "zohomail.com"
 
   tags = local.tags
@@ -56,6 +56,32 @@ module "cocktails_dns_zoho_mx_record" {
       preference = 50
       exchange   = "mx3.zoho.com"
     }
+  ]
+}
+
+# =====================================================
+# APEX TXT Records
+# =====================================================
+module "cocktails_dns_apex_txt_records" {
+  source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-txt-record"
+  count  = var.include_apex_domain_records == true ? 1 : 0
+  name   = "@"
+  ttl    = 300
+
+  tags = local.tags
+
+  providers = {
+    azurerm = azurerm
+  }
+
+  dns_zone = {
+    name                = data.azurerm_dns_zone.cezzis_dns_zone.name
+    resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
+  }
+
+  values = [
+    "v=spf1 include:zohomail.com ~all",
+    "google-site-verification=w4YM0OPjGK14u7y6xPLc4w5TW6k3U2V3YLsY5cI0paQ"
   ]
 }
 
@@ -111,25 +137,4 @@ resource "azurerm_dns_a_record" "apex_frontdoor" {
   ttl                 = 300
   target_resource_id  = data.azurerm_cdn_frontdoor_endpoint.global_shared_cdn_endpoint.id
   tags                = local.tags
-}
-
-# ================================
-# Google Site Verification
-# ================================
-module "cocktails_dns_google_site_verification_txt" {
-  source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-txt-record"
-  count  = var.include_google_verification_txt_record == true ? 1 : 0
-  name   = "@"
-  value  = "google-site-verification=w4YM0OPjGK14u7y6xPLc4w5TW6k3U2V3YLsY5cI0paQ"
-
-  tags = local.tags
-
-  dns_zone = {
-    name                = data.azurerm_dns_zone.cezzis_dns_zone.name
-    resource_group_name = data.azurerm_dns_zone.cezzis_dns_zone.resource_group_name
-  }
-
-  providers = {
-    azurerm = azurerm
-  }
 }
