@@ -119,8 +119,8 @@ resource "azurerm_dns_a_record" "apex_frontdoor" {
 module "cocktails_dns_google_site_verification_txt" {
   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/dns-txt-record"
   count  = var.include_google_verification_txt_record == true ? 1 : 0
-  name   = "google-site-verification"
-  value  = "w4YM0OPjGK14u7y6xPLc4w5TW6k3U2V3YLsY5cI0paQ"
+  name   = "@"
+  value  = "google-site-verification=w4YM0OPjGK14u7y6xPLc4w5TW6k3U2V3YLsY5cI0paQ"
 
   tags = local.tags
 
