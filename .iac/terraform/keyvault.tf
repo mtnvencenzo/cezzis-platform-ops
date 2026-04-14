@@ -14,6 +14,14 @@ resource "random_password" "shared-daprio-app-api-token" {
   numeric = true
 }
 
+resource "random_password" "antiforgery_signing_secret" {
+  length  = 64
+  special = false
+  numeric = true
+  upper   = true
+  lower   = true
+}
+
 
 module "aca_cocktails_api" {
   source = "git::ssh://git@github.com/mtnvencenzo/Terraform-Modules.git//modules/key-vault"
@@ -53,6 +61,10 @@ module "aca_cocktails_api" {
     {
       name  = "shared-container-registry-password"
       value = data.azurerm_container_registry.shared_acr.admin_password
+    },
+    {
+      name  = "antiforgery-signing-secret"
+      value = random_password.antiforgery_signing_secret.result
     }
   ]
 

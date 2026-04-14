@@ -159,6 +159,14 @@ module "keyvault_onprem" {
         Application = var.domain
         Environment = "prm"
       }
+    },
+    {
+      name  = "antiforgery-signing-secret"
+      value = "n/a"
+      tags = {
+        Application = var.domain
+        Environment = "prm"
+      }
     }
   ]
 }
