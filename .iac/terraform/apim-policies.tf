@@ -7,6 +7,7 @@ module "apim_cezzis_antiforgery_jwtsignature_policy" {
   domain                          = "cezzis"
   name_discriminator              = "api"
   issuers                         = [var.antiforgery_token_issuer]
+  header_name                     = var.antiforgery_token_header
   keyvault_signaturekey_secret_id = "https://${module.aca_cocktails_api.name}.vault.azure.net/secrets/antiforgery-signing-secret"
 
   apim_instance = {

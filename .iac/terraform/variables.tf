@@ -83,3 +83,8 @@ variable "antiforgery_token_issuer" {
   type        = string
   description = "The issuer value to be used in antiforgery tokens"
 }
+
+variable "antiforgery_token_header" {
+  type        = string
+  description = "The header name to be used in antiforgery tokens"
+}
