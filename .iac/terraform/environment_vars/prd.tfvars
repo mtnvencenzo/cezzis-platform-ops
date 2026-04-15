@@ -12,3 +12,4 @@ include_apex_domain_records = true
 
 auth0_custom_domain_cname     = "cezzis-cd-skhnnuczfndoqumy.edge.tenants.us.auth0.com"
 auth0_custom_domain_subdomain = "login"
+antiforgery_token_issuer      = "https://www.cezzis.com"

@@ -78,3 +78,8 @@ variable "auth0_custom_domain_subdomain" {
   type        = string
   description = "Auth0 custom domain (e.g., login)"
 }
+
+variable "antiforgery_token_issuer" {
+  type        = string
+  description = "The issuer value to be used in antiforgery tokens"
+}
