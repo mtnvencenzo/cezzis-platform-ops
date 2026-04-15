@@ -65,6 +65,10 @@ module "aca_cocktails_api" {
     {
       name  = "antiforgery-signing-secret"
       value = random_password.antiforgery_signing_secret.result
+    },
+    {
+      name  = "antiforgery-signing-secret-base64"
+      value = base64encode(random_password.antiforgery_signing_secret.result)
     }
   ]
 

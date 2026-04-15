@@ -8,7 +8,7 @@ module "apim_cezzis_antiforgery_jwtsignature_policy" {
   name_discriminator              = "antiforgery"
   issuers                         = [var.antiforgery_token_issuer]
   header_name                     = var.antiforgery_token_header
-  keyvault_signaturekey_secret_id = "https://${module.aca_cocktails_api.name}.vault.azure.net/secrets/antiforgery-signing-secret"
+  keyvault_signaturekey_secret_id = "https://${module.aca_cocktails_api.name}.vault.azure.net/secrets/antiforgery-signing-secret-base64"
 
   apim_instance = {
     id                  = data.azurerm_api_management.shared_apim.id
