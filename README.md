@@ -29,19 +29,6 @@ This directory contains the Terraform infrastructure code for managing shared Az
 - **Storage**: Azure Blob Storage
 - **Security**: Azure Key Vault, Azure B2C
 
-## 📁 Project Structure
-
-```
-.github/                # GitHub Workflow definitions
-terraform/             # Terraform configuration files
-├── environment_vars/   # Environment-specific variables
-├── datasources.tf     # Data source definitions
-├── keyvault.tf        # Key Vault configuration
-├── storageaccount.tf  # Storage account setup
-└── variables.tf       # Variable definitions
-README.md              # This file
-```
-
 ## 🚀 Deployment
 
 ### Prerequisites
@@ -50,44 +37,6 @@ README.md              # This file
 - GitHub access
 - Appropriate Azure permissions
 
-### Environment Setup
-1. Configure Azure credentials
-2. Set up Terraform backend
-3. Configure environment variables
-4. Set up GitHub secrets for sensitive data
-
-### Deployment Process
-The infrastructure is deployed using GitHub Workflows:
-
-1. **Plan Stage**: Validates and plans infrastructure changes
-2. **Apply Stage**: Applies approved changes to the environment
-3. **Tagging**: Creates Git tags for successful deployments
-
-### Environment Variables
-Environment-specific configurations are stored in `terraform/environment_vars/`:
-- `prd.tfvars`: Production environment settings
-- Additional environment files as needed (right now only prd exists)
-
-## 🔒 Security
-
-- All secrets are stored in Azure Key Vault
-- Network security rules are enforced at subnet level
-- HTTPS is enforced for all public endpoints
-- CORS policies are configured for allowed origins
-
-## 📈 Monitoring
-
-- Azure Monitor integration
-- Resource health monitoring
-- Cost tracking and optimization
-
-## 🤝 Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Test the changes using Terraform plan
-4. Submit a pull request
-5. Wait for approval and automated deployment
 
 ## 📄 License
 
