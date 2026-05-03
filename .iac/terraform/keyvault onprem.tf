@@ -36,6 +36,14 @@ module "keyvault_onprem" {
     {
       name  = "shared-container-registry-password"
       value = data.azurerm_container_registry.shared_acr.admin_password
+    },
+    {
+      name  = "cezzis-cloud-sync-onprem-topic-send-primary-key"
+      value = azurerm_servicebus_topic_authorization_rule.cezzis_onprem_cloud_sync_topic_send.primary_key
+    },
+    {
+      name  = "cezzis-cloud-sync-onprem-topic-send-secondary-key"
+      value = azurerm_servicebus_topic_authorization_rule.cezzis_onprem_cloud_sync_topic_send.secondary_key
     }
   ]
 
