@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: shared-pod-data-pv-cezzis
+  labels:
+    app.kubernetes.io/part-of: cezzis
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  capacity:
+    storage: 15Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: pod-app-data-cezzis
+  hostPath:
+    path: /pods
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-pod-data-pvc
+  namespace: cezzis
+  labels:
+    app.kubernetes.io/part-of: cezzis
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  storageClassName: pod-app-data-cezzis
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 15Gi

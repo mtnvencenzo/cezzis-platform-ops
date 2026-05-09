@@ -1,0 +1,1562 @@
+{
+  "version": 8,
+  "dashboardId": "7452333171242172416",
+  "title": "cocktail-embeddings",
+  "description": "",
+  "role": "",
+  "owner": "",
+  "created": "2026-04-21T12:31:25.675Z",
+  "tabs": [
+    {
+      "tabId": "default",
+      "name": "Default",
+      "panels": [
+        {
+          "id": "Panel_ID5216410",
+          "type": "stacked",
+          "title": "Embedding Results",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "decimals": 2,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": true,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "value",
+                  "value": "success",
+                  "color": "#089600"
+                },
+                {
+                  "type": "value",
+                  "value": "failed",
+                  "color": "#e33119"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT\n    histogram(_timestamp) as \"time\",\n    CASE\n        WHEN severity = 'INFO' THEN 'success'\n        WHEN severity = 'ERROR' THEN 'failed'\n        ELSE 'unknown'\n    END as status,\n    count(*) as count\nFROM \"default\"\nWHERE app_name like 'cocktails-ingestion-embedding-agent%' AND app_env = '$env' AND body in ('Cocktail embedding succeeded', 'Received empty cocktail chunking model', 'Received cocktail embedding message with no value', 'Error processing cocktail embedding message', 'Error processing cocktail embedding message item')\nGROUP BY time, status, severity\nORDER BY time ASC",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "time",
+                    "alias": "time",
+                    "type": "build",
+                    "color": null,
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "time",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": true,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "count",
+                    "alias": "count",
+                    "type": "build",
+                    "color": "#5960b2",
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "count",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": true,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [
+                  {
+                    "label": "status",
+                    "alias": "status",
+                    "type": "build",
+                    "color": null,
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "status",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": []
+                  }
+                ],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 26,
+            "w": 121,
+            "h": 13,
+            "i": 1
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID27410",
+          "type": "stacked",
+          "title": "Extraction Results",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "decimals": 2,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": true,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "value",
+                  "value": "success",
+                  "color": "#089600"
+                },
+                {
+                  "type": "value",
+                  "value": "failed",
+                  "color": "#e33119"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT\n    histogram(_timestamp) as \"time\",\n    CASE\n        WHEN severity = 'INFO' THEN 'success'\n        WHEN severity = 'ERROR' OR severity = 'WARN' THEN 'failed'\n        ELSE 'unknown'\n    END as status,\n    count(*) as count\nFROM \"default\"\nWHERE app_name like 'cocktails-ingestion-extraction-agent%' AND app_env = '$env' AND body in ('Error processing cocktail extraction message item', 'Error processing cocktail extraction message', 'Cocktail extraction succeeded', 'Empty extraction text received after processing', 'Failed to parse cocktail extraction message item', 'Cocktail item missing ''Id'' field, skipping', 'Received cocktail extraction message with no value')\nGROUP BY time, status, severity\nORDER BY time ASC",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "time",
+                    "alias": "time",
+                    "type": "build",
+                    "color": null,
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "time",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": true,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "count",
+                    "alias": "count",
+                    "type": "build",
+                    "color": "#5960b2",
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "count",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": true,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [
+                  {
+                    "label": "status",
+                    "alias": "status",
+                    "type": "build",
+                    "color": null,
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "status",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": []
+                  }
+                ],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 121,
+            "h": 13,
+            "i": 2
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID934410",
+          "type": "stacked",
+          "title": "Chunking Results",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "decimals": 2,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": true,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "value",
+                  "value": "success",
+                  "color": "#089600"
+                },
+                {
+                  "type": "value",
+                  "value": "failed",
+                  "color": "#e33119"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT\n    histogram(_timestamp) as \"time\",\n    CASE\n        WHEN severity = 'INFO' THEN 'success'\n        WHEN severity = 'ERROR' OR severity = 'WARN' THEN 'failed'\n        ELSE 'unknown'\n    END as status,\n    count(*) as count\nFROM \"default\"\nWHERE app_name like 'cocktails-ingestion-chunking-agent%' AND app_env = '$env' AND body in ('Error processing cocktail chunking message', 'Error processing cocktail chunking message item', 'Cocktail chunking succeeded', 'No chunks were created from cocktail extraction text, skipping sending to embedding topic', 'Received cocktail chunking message with no value')\nGROUP BY time, status, severity\nORDER BY time ASC",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "time",
+                    "alias": "time",
+                    "type": "build",
+                    "color": null,
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "time",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": true,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "count",
+                    "alias": "count",
+                    "type": "build",
+                    "color": "#5960b2",
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "count",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": true,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [
+                  {
+                    "label": "status",
+                    "alias": "status",
+                    "type": "build",
+                    "color": null,
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "status",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": []
+                  }
+                ],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 13,
+            "w": 121,
+            "h": 13,
+            "i": 3
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID1494410",
+          "type": "metric",
+          "title": "Successful Extractions",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "numbers",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": []
+            },
+            "background": {
+              "type": "single",
+              "value": {
+                "color": "#f0fff0"
+              }
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT count(_timestamp) as \"y_axis_1\" FROM \"default\"\nWHERE app_name like 'cocktails-ingestion-extraction-agent%' AND app_env = '$env' AND body in ('Cocktail extraction succeeded')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Timestamp",
+                    "alias": "y_axis_1",
+                    "column": "y_axis_1",
+                    "type": "build",
+                    "color": null,
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "_timestamp",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": false,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 123,
+            "y": 0,
+            "w": 22,
+            "h": 12,
+            "i": 4
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID9604510",
+          "type": "metric",
+          "title": "Failed Extractions",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "numbers",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": []
+            },
+            "background": {
+              "type": "single",
+              "value": {
+                "color": "#ffe0e0"
+              }
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT count(_timestamp) as \"y_axis_1\" FROM \"default\"\nWHERE app_name like 'cocktails-ingestion-extraction-agent%' AND app_env = '$env' AND body in ('Error processing cocktail extraction message item', 'Error processing cocktail extraction message', 'Empty extraction text received after processing', 'Failed to parse cocktail extraction message item', 'Cocktail item missing ''Id'' field, skipping', 'Received cocktail extraction message with no value')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Timestamp",
+                    "alias": "y_axis_1",
+                    "column": "y_axis_1",
+                    "type": "build",
+                    "color": null,
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "_timestamp",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": false,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 145,
+            "y": 0,
+            "w": 22,
+            "h": 12,
+            "i": 5
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID878510",
+          "type": "metric",
+          "title": "Successful Chunkings",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "numbers",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": []
+            },
+            "background": {
+              "type": "single",
+              "value": {
+                "color": "#f0fff0"
+              }
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT count(_timestamp) as \"y_axis_1\" FROM \"default\"\nWHERE app_name like 'cocktails-ingestion-chunking-agent%' AND app_env = '$env' AND body in ('Cocktail chunking succeeded')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Timestamp",
+                    "alias": "y_axis_1",
+                    "column": "y_axis_1",
+                    "type": "build",
+                    "color": null,
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "_timestamp",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": false,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 123,
+            "y": 12,
+            "w": 22,
+            "h": 13,
+            "i": 6
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID1627810",
+          "type": "metric",
+          "title": "Failed Chunkings",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "numbers",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": []
+            },
+            "background": {
+              "type": "single",
+              "value": {
+                "color": "#ffe0e0"
+              }
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT count(_timestamp) as \"y_axis_1\" FROM \"default\"\nWHERE app_name like 'cocktails-ingestion-chunking-agent%' AND app_env = '$env' AND body in ('Error processing cocktail chunking message', 'Error processing cocktail chunking message item', 'No chunks were created from cocktail extraction text, skipping sending to embedding topic', 'Received cocktail chunking message with no value')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Timestamp",
+                    "alias": "y_axis_1",
+                    "column": "y_axis_1",
+                    "type": "build",
+                    "color": null,
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "_timestamp",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": false,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 145,
+            "y": 12,
+            "w": 22,
+            "h": 13,
+            "i": 7
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID5308910",
+          "type": "metric",
+          "title": "Successful Embeddings",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "numbers",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": []
+            },
+            "background": {
+              "type": "single",
+              "value": {
+                "color": "#f0fff0"
+              }
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT count(_timestamp) as \"y_axis_1\" FROM \"default\"\nWHERE app_name like 'cocktails-ingestion-embedding-agent%' AND app_env = '$env' AND body in ('Cocktail embedding succeeded')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Timestamp",
+                    "alias": "y_axis_1",
+                    "column": "y_axis_1",
+                    "type": "build",
+                    "color": null,
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "_timestamp",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": false,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 123,
+            "y": 25,
+            "w": 22,
+            "h": 12,
+            "i": 8
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        },
+        {
+          "id": "Panel_ID1029510",
+          "type": "metric",
+          "title": "Failed Embeddings",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": null,
+            "unit": "numbers",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "step_value": "0",
+            "top_results_others": false,
+            "axis_border_show": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "axis_label_rotate": 0,
+            "show_symbol": false,
+            "line_interpolation": "smooth",
+            "legend_width": {
+              "unit": "px"
+            },
+            "legend_height": {
+              "unit": "px"
+            },
+            "base_map": {
+              "type": "osm"
+            },
+            "map_type": {
+              "type": "world"
+            },
+            "map_view": {
+              "zoom": 1,
+              "lat": 0,
+              "lng": 0
+            },
+            "map_symbol_style": {
+              "size": "by Value",
+              "size_by_value": {
+                "min": 1,
+                "max": 100
+              },
+              "size_fixed": 2
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "connect_nulls": false,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": []
+            },
+            "background": {
+              "type": "single",
+              "value": {
+                "color": "#ffe0e0"
+              }
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1,
+              "group_by_y_axis": false
+            },
+            "show_gridlines": true,
+            "aggregation": "last",
+            "lat_label": "latitude",
+            "lon_label": "longitude",
+            "weight_label": "weight",
+            "name_label": "name",
+            "table_aggregations": [
+              "last"
+            ],
+            "promql_table_mode": "single",
+            "visible_columns": [],
+            "hidden_columns": [],
+            "sticky_columns": [],
+            "sticky_first_column": false,
+            "column_order": [],
+            "table_pagination": false,
+            "panel_time_enabled": false
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT count(_timestamp) as \"y_axis_1\" FROM \"default\"\nWHERE app_name like 'cocktails-ingestion-embedding-agent%' AND app_env = '$env' AND body in ('Received empty cocktail chunking model', 'Received cocktail embedding message with no value', 'Error processing cocktail embedding message', 'Error processing cocktail embedding message item')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "default",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Timestamp",
+                    "alias": "y_axis_1",
+                    "column": "y_axis_1",
+                    "type": "build",
+                    "color": null,
+                    "functionName": "count",
+                    "args": [
+                      {
+                        "type": "field",
+                        "value": {
+                          "field": "_timestamp",
+                          "streamAlias": null
+                        }
+                      }
+                    ],
+                    "isDerived": false,
+                    "havingConditions": [],
+                    "treatAsNonTimestamp": false,
+                    "showFieldAsJson": false
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              },
+              "joins": []
+            }
+          ],
+          "layout": {
+            "x": 145,
+            "y": 25,
+            "w": 22,
+            "h": 12,
+            "i": 9
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": " // To know more about ECharts , \n// visit: https://echarts.apache.org/examples/en/index.html \n// Example: https://echarts.apache.org/examples/en/editor.html?c=line-simple \n// Define your ECharts 'option' here. \n// 'data' variable is available for use and contains the response data from the search result and it is an array.\noption = {  \n \n};\n  "
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "list": [
+      {
+        "type": "textbox",
+        "name": "env",
+        "label": "",
+        "query_data": null,
+        "value": "prd",
+        "options": [
+          {
+            "label": "",
+            "value": "",
+            "selected": true
+          }
+        ],
+        "multiSelect": false,
+        "hideOnDashboard": false,
+        "selectAllValueForMultiSelect": "",
+        "customMultiSelectValue": [],
+        "escapeSingleQuotes": false,
+        "scope": "global",
+        "tabs": [],
+        "panels": []
+      }
+    ],
+    "showDynamicFilters": true
+  },
+  "defaultDatetimeDuration": {
+    "type": "relative",
+    "relativeTimePeriod": "15m",
+    "startTime": 1773618363952000,
+    "endTime": 1773619263952000
+  }
+}
